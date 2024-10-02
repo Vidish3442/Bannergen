@@ -13,14 +13,7 @@ const port = 3000;
 
 // Firebase configuration (using your keys directly)
 const firebaseConfig = {
-    apiKey: "AIzaSyDi5PhsL1GoiFBNUoDBwGJt7d8T76SapXI",
-    authDomain: "bannergen-9e841.firebaseapp.com",
-    projectId: "bannergen-9e841",
-    storageBucket: "bannergen-9e841.appspot.com",
-    messagingSenderId: "143117302117",
-    appId: "1:143117302117:web:0b13cf47880796ff2fc98c",
-    measurementId: "G-GZ4CWD05GN",
-    databaseURL: "https://bannergen-9e841-default-rtdb.firebaseio.com" // Corrected Realtime Database URL
+    //use you firebase here
 };
 
 // Initialize Firebase
