@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Dynamic Banner Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .banner-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-group input[type="text"] {
+            font-size: 16px;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .generated-banner {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .generated-banner img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>AI-Powered Dynamic Banner Generator</h1>
+
+        <!-- Form to upload an image and generate banner -->
+        <form id="banner-form" class="banner-form">
+            <div class="form-group">
+                <label for="image-upload">Upload Image:</label>
+                <input type="file" id="image-upload" name="image" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="offer-text">Offer Text:</label>
+                <input type="text" id="offer-text" name="offer" placeholder="Enter Offer Text" required>
+            </div>
+            <div class="form-group">
+                <label for="color-palette">Color Palette:</label>
+                <input type="text" id="color-palette" name="colorPalette" placeholder="Enter Color Palette (e.g., blue, red)" required>
+            </div>
+            <div class="form-group">
+                <label for="theme">Theme:</label>
+                <input type="text" id="theme" name="theme" placeholder="Enter Theme (e.g., Summer Sale)" required>
+            </div>
+            <div class="form-group">
+                <label for="output-size">Output Size:</label>
+                <input type="text" id="output-size" name="outputSize" placeholder="Enter Output Size (e.g., 1080x720)" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Generate Banner</button>
+            </div>
+        </form>
+
+        <!-- Display the generated banner here -->
+        <div id="generated-banner" class="generated-banner"></div>
+
+        <!-- Status Message -->
+        <div id="status-message" class="status-message"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("banner-form");
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                let formData = new FormData(form);
+
+                // Show status message before submitting
+                document.getElementById("status-message").textContent = "Generating your banner...";
+
+                fetch('http://localhost:3000/generate', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display the generated banner
+                    const imageUrl = data.imageUrl; // Assuming the response contains imageUrl
+                    document.getElementById("generated-banner").innerHTML = `<img src="${imageUrl}" alt="Generated Banner">`;
+                    document.getElementById("status-message").textContent = "Banner generated successfully!";
+                })
+                .catch(error => {
+                    document.getElementById("status-message").textContent = "Error generating banner: " + error.message;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
